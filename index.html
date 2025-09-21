@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Flores Amarillas</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Georgia", serif;
+      background: linear-gradient(to bottom, #000000, #1a1a1a);
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    .hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    /* Flores animadas */
+    .petalo {
+      position: absolute;
+      top: -50px;
+      width: 30px;
+      height: 30px;
+      background-size: cover;
+      background-repeat: no-repeat;
+      animation: caer linear infinite;
+    }
+
+    @keyframes caer {
+      0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0.8; }
+    }
+
+    h1 {
+      font-size: 70px;
+      background: linear-gradient(to top, #ffcc00, #ffd84d);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+      margin: 0;
+      line-height: 1.1;
+    }
+
+    p.subtitulo {
+      font-size: 20px;
+      font-style: italic;
+      color: #ccc;
+      margin: 15px 0 30px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 25px;
+      border: 2px solid gold;
+      border-radius: 30px;
+      color: gold;
+      font-weight: bold;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: gold;
+      color: black;
+    }
+
+    .descubre {
+      position: absolute;
+      bottom: 30px;
+      text-align: center;
+      color: gold;
+      font-size: 14px;
+      letter-spacing: 2px;
+    }
+
+    .descubre .flecha {
+      font-size: 22px;
+      margin-top: 5px;
+      animation: saltar 1.5s infinite;
+    }
+
+    @keyframes saltar {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(10px); }
+    }
+
+   /* 🌹 Sección de flores estilo corazón */
+.seccion-flores {
+  position: relative;
+  padding: 80px 20px;
+  background: radial-gradient(circle, #1a1a00, #000);
+  text-align: center;
+  overflow: hidden;
+}
+
+.flores-contenedor {
+  position: relative;
+  margin: 0 auto 30px auto;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.6);
+  box-shadow: 0 0 40px gold, 0 0 80px goldenrod;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flores-imagen {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+}
+
+.flores-texto {
+  font-size: 1.4rem;
+  color: white;
+  font-style: italic;
+  text-shadow: 0 0 10px black, 0 0 20px yellow;
+}
+
+
+    .momento-eterno {
+      background: linear-gradient(to bottom, #111, #000);
+      text-align: center;
+      padding: 80px 20px;
+    }
+
+    .momento-eterno h2 {
+      font-size: 50px;
+      color: gold;
+      text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+      margin-bottom: 15px;
+    }
+
+    .momento-eterno .subtitulo {
+      color: #bbb;
+      font-style: italic;
+      font-size: 18px;
+      margin-bottom: 50px;
+    }
+
+    .caja-texto {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 25px 35px;
+      background: rgba(20, 20, 20, 0.9);
+      border: 1px solid rgba(255, 215, 0, 0.4);
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+      color: #fff;
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    /* Sección tarjeta */
+    .tarjeta-flores {
+      background: radial-gradient(circle, #1a1a00, #000);
+      padding: 100px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tarjeta-flores::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background:rgba(0, 0, 0, 0.6);
+      background-size: cover;
+      opacity: 0.15;
+      animation: moverFlores 20s linear infinite;
+    }
+
+    @keyframes moverFlores {
+      from { transform: translateY(0); }
+      to { transform: translateY(-50px); }
+    }
+
+    .tarjeta {
+      position: relative;
+      z-index: 1;
+      background: black;
+      border: 2px solid gold;
+      border-radius: 20px;
+      padding: 40px 30px;
+      text-align: center;
+      max-width: 400px;
+      box-shadow: 0 0 25px gold;
+    }
+
+    .tarjeta h2 {
+      font-size: 28px;
+      color: gold;
+      text-shadow: 0 0 10px gold;
+      margin-bottom: 5px;
+    }
+
+    .tarjeta .fecha {
+      font-size: 14px;
+      color: #ddd;
+      margin-bottom: 20px;
+    }
+
+    .tarjeta .ramo img {
+      max-width: 220px;
+      border-radius: 50%;
+      border: 2px solid gold;
+      box-shadow: 0 0 20px gold;
+      margin-bottom: 20px;
+    }
+
+    .tarjeta .mensaje {
+      color: white;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .btn-flor {
+      display: inline-block;
+      font-size: 24px;
+      background: gold;
+      color: black;
+      border-radius: 50%;
+      padding: 10px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .btn-flor:hover {
+      background: white;
+      transform: scale(1.2);
+    }
+
+    .dedicatoria {
+      margin-top: 20px;
+      font-style: italic;
+      font-size: 18px;
+      color: gold;
+      text-shadow: 0 0 10px gold;
+    }
+
+    /* ===== Modal ===== */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(4px);
+      overflow-y: auto; /* scroll en toda la página */
+      padding: 40px 0;
+    }
+
+    .modal-contenido {
+      position: relative;
+      background: #000;
+      border: 2px solid gold;
+      border-radius: 12px;
+      max-width: 600px;
+      margin: 5% auto;
+      padding: 40px 30px;
+      color: white;
+      text-align: left;
+      box-shadow: 0 0 25px gold;
+      font-family: "Georgia", serif;
+      animation: aparecer 0.5s ease;
+    }
+
+    .modal h2 {
+      text-align: center;
+      color: gold;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .cerrar {
+      position: absolute;
+      top: 10px; right: 15px;
+      font-size: 24px;
+      font-weight: bold;
+      color: gold;
+      cursor: pointer;
+    }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hero">
+    <div id="flores"></div>
+    <h1>Flores<br>Amarillas</h1>
+    <p class="subtitulo">Donde el tiempo se detiene y el amor florece eternamente</p>
+    <a href="#contenido" class="btn">PARA TI, CON TODO MI CORAZÓN ❤</a>
+    <div class="descubre">
+      DESCUBRE<br>
+      <span class="flecha">⌄</span>
+    </div>
+  </div>
+
+  <!-- 🌻 Nueva sección de Flores -->
+<!-- 🌹 Nueva sección con corazón de rosas amarillas -->
+<section class="seccion-flores">
+  <div class="flores-contenedor">
+    <img src="descarga (3).png" alt="Corazón de Rosas Amarillas" class="flores-imagen">
+  </div>
+  <p class="flores-texto">
+    Un corazón lleno de flores amarillas, tan radiante como tú 💛
+  </p>
+</section>
+
+
+  <section class="momento-eterno" id="contenido">
+    <h2>Un Momento Eterno</h2>
+    <p class="subtitulo">
+      En el silencio dorado de este día especial, cada pétalo susurra historias <br>
+      que trascienden el tiempo.
+    </p>
+    <div class="caja-texto">
+      <p>
+        En este día especial donde todo brilla un poco más, quiero regalarte sonrisas y buenos momentos. Gracias por estar siempre, por compartir risas, charlas y recuerdos que hacen que la vida sea mucho más bonita contigo.
+      </p>
+    </div>
+  </section>
+
+  <section class="tarjeta-flores">
+    <div class="tarjeta">
+      <h2>Feliz Día de las<br>Flores Amarillas</h2>
+      <p class="fecha">21 de Septiembre</p>
+      <div class="ramo">
+        <img src="snoopy_only_yellow_flowers_20250919220305_1.webp" alt="Ramo de girasoles">
+      </div>
+      <p class="mensaje">En este día especial, quiero que sepas...</p>
+      <a href="#!" class="btn-flor" id="abrirModal">🌼</a>
+      <p class="dedicatoria">Para Ti con Amor.</p>
+    </div>
+  </section>
+
+  <!-- Modal -->
+  <div id="miModal" class="modal">
+    <div class="modal-contenido">
+      <span class="cerrar" id="cerrarModal">&times;</span>
+      <h2>Para Mi Val</h2>
+      <p>Vale,</p>
+      <p>
+        En este Día de las Flores Amarillas, quiero agradecerte por ser parte tan importante de mi vida.
+      </p>
+      <p>
+        Eres como un campo de flores amarillas que ilumina mis días, llenando mi vida de alegría y color. 
+        Cada momento a tu lado es un tesoro que atesoro profundamente.
+      </p>
+      <p>
+Recuerdo tantas veces que tu risa ha llenado de luz cualquier día gris, y cómo tu amistad ha sido ese regalo especial que siempre me acompaña.      </p>
+      <p>
+       Eres una persona incondicional con quien no se necesita fingir nada, a quien le puedes mostrar su lado vulnerable sin miedo a que te traicione.
+      </p>
+      <p>
+        Hoy quiero decirte que me siento afortunada de tenerte en mi vida. Eres un un pilar importante y una persona maravillosa que hace de cada instante un recuerdo especial. Gracias por tu confianza, por tu sinceridad y por darme el privilegio de caminar a tu lado en esta etapa de la vida.
+      </p>
+      <p>
+        Que este Día de las Flores Amarillas sea solo un símbolo de todo lo que significas para mí: alegría, gratitud y un cariño que no tiene fin. 🌼💛
+      </p>
+      <p style="text-align:center; margin-top:30px; color:gold; font-style:italic;">
+        Con todo mi Amor.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // Generar flores cayendo
+    const flores = ["🌻"];
+    function crearPetalo() {
+      const petalo = document.createElement("div");
+      petalo.classList.add("petalo");
+      petalo.textContent = flores[Math.floor(Math.random() * flores.length)];
+      petalo.style.left = Math.random() * 100 + "vw";
+      petalo.style.animationDuration = (5 + Math.random() * 5) + "s";
+      petalo.style.fontSize = (20 + Math.random() * 20) + "px";
+      document.getElementById("flores").appendChild(petalo);
+      setTimeout(() => petalo.remove(), 10000);
+    }
+    setInterval(crearPetalo, 600);
+
+    // Modal
+    const modal = document.getElementById("miModal");
+    const btn = document.getElementById("abrirModal");
+    const cerrar = document.getElementById("cerrarModal");
+
+    btn.onclick = () => modal.style.display = "block";
+    cerrar.onclick = () => modal.style.display = "none";
+    window.onclick = (e) => { if (e.target == modal) modal.style.display = "none"; }
+  </script>
+</body>
+</html>

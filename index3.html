@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candado Estelar</title>
+    <style>
+        /* === ESTILOS GLOBALES Y VARIABLES === */
+        :root {
+            --color-candado-principal: #e0b445; /* Amarillo mostaza */
+            --color-candado-sombra: #d1a432;
+            --color-candado-ruedas: #8b712c;
+            --color-small-flower-petal: #ffc200; /* Amarillo brillante */
+            --color-small-flower-center: #6b4d00; /* Marrón oscuro para el centro */
+        }
+
+        body {
+            position: relative;
+            min-height: 100vh;
+            margin: 0;
+            background: #000; /* Fondo negro para el cielo estrellado */
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* === ESTILOS DE ESTRELLAS FIJAS === */
+        .star {
+            position: absolute;
+            border-radius: 50%;
+            background: white;
+            opacity: 0.8;
+            animation: twinkle 2s infinite alternate;
+            z-index: 0; /* Asegura que estén en la capa más baja */
+        }
+
+        @keyframes twinkle {
+            from { opacity: 0.3; }
+            to   { opacity: 1; }
+        }
+
+        /* === ESTILOS DE ESTRELLAS FUGACES === */
+        .shooting-star {
+            position: absolute;
+            width: 150px;
+            height: 2px;
+            background: linear-gradient(to right, white, rgba(255,255,255,0));
+            opacity: 0;
+            transform: rotate(225deg); /* diagonal hacia abajo */
+            animation: shoot 1.7s ease-in-out;
+            z-index: 10; /* Una capa por encima de las estrellas fijas, pero por debajo del candado */
+        }
+
+        .shooting-star::before {
+            content: "";
+            position: absolute;
+            left: -4px;
+            top: -4px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0 0 6px white, 0 0 12px white;
+        }
+
+        @keyframes shoot {
+            0% {
+                transform: translate(0,0) rotate(225deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(600px,600px) rotate(225deg);
+                opacity: 0;
+            }
+        }
+
+        /* === ESTILOS DEL CANDADO === */
+        .padlock-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%) scale(1);
+            bottom: 50px;
+            margin-top: 0;
+            z-index: 100; /* Asegura que el candado siempre esté en la capa superior */
+        }
+
+        .padlock-body {
+            width: 250px;
+            height: 140px;
+            background-color: var(--color-candado-principal);
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow:
+                inset 0 5px 10px rgba(255, 255, 255, 0.6),
+                inset 0 -5px 10px rgba(0, 0, 0, 0.3),
+                0 15px 30px rgba(0, 0, 0, 0.4);
+            border: 3px solid var(--color-candado-sombra);
+            position: relative;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .small-flower {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: var(--color-small-flower-center);
+            box-shadow:
+                0 0 0 5px var(--color-small-flower-petal),
+                0 0 0 6px rgba(0,0,0,0.2);
+        }
+
+        .flower-left { top: 10px; left: 10px; }
+        .flower-right { top: 10px; right: 10px; }
+
+        .combination-inputs {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            background-color: var(--color-candado-sombra);
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
+            border: 1px solid #c0962a;
+        }
+
+        .wheel {
+            background-color: var(--color-candado-ruedas);
+            border-radius: 5px;
+            overflow: hidden;
+            width: 55px;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+            border: 1px solid #6c5a24;
+            text-align: center;
+        }
+
+        .number-display {
+            font-size: 22px;
+            color: #fff;
+            background-color: var(--color-candado-ruedas);
+            padding: 4px 0;
+            border-bottom: 1px solid #6c5a24;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-shadow: 0 0 5px #000;
+        }
+
+        .arrow {
+            width: 100%;
+            height: 18px;
+            border: none;
+            background-color: #6c5a24;
+            color: #fff;
+            font-size: 10px;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.1s;
+        }
+
+        .arrow:hover { background-color: #a8945f; }
+        .arrow:active {
+            background-color: #4d401a;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .prompt-text {
+            color: #fff;
+            font-style: italic;
+            text-align: center;
+            font-size: 13px;
+            margin-top: 4px;
+            padding: 3px 10px;
+            text-shadow: 1px 1px 2px #000;
+        }
+
+        /* Estilos para Snoopy */
+        .snoopy-on-padlock {
+            position: absolute;
+            width: 400px; /* Ajusta el tamaño según necesites */
+            height: auto;
+            top: -350px; /* Posiciona a Snoopy por encima del candado */
+            /* Puedes ajustar 'left' o 'right' si no quieres que esté centrado */
+            z-index: 101; /* Asegura que Snoopy esté por encima del candado */
+        }
+
+
+        /* Mensaje de éxito */
+        .success-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 20px 40px;
+            border-radius: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            border: 2px solid #fff;
+            display: none; /* Oculto por defecto */
+            z-index: 200; /* 👈 más alto que el Snoopy */
+        }
+    </style>
+</head>
+<body>
+    <div class="padlock-container">
+        <img src="Snoopy 2.png" alt="Snoopy con corazón" class="snoopy-on-padlock">
+
+        <div class="padlock-body">
+            <div class="small-flower flower-left"></div>
+            <div class="small-flower flower-right"></div>
+
+            <div class="combination-inputs">
+                <div class="wheel" id="wheel1">
+                    <div class="number-display">00</div>
+                    <div class="controls">
+                        <button class="arrow up-arrow" onclick="changeNumber(1, 1)">&#9650;</button>
+                        <button class="arrow down-arrow" onclick="changeNumber(1, -1)">&#9660;</button>
+                    </div>
+                </div>
+
+                <div class="wheel" id="wheel2">
+                    <div class="number-display">00</div>
+                    <div class="controls">
+                        <button class="arrow up-arrow" onclick="changeNumber(2, 1)">&#9650;</button>
+                        <button class="arrow down-arrow" onclick="changeNumber(2, -1)">&#9660;</button>
+                    </div>
+                </div>
+
+                <div class="wheel" id="wheel3">
+                    <div class="number-display">00</div>
+                    <div class="controls">
+                        <button class="arrow up-arrow" onclick="changeNumber(3, 1)">&#9650;</button>
+                        <button class="arrow down-arrow" onclick="changeNumber(3, -1)">&#9660;</button>
+                    </div>
+                </div>
+            </div>
+
+            <p class="prompt-text">Ingresa una fecha especial para nosotros. Pista: Comienzo de este viaje</p>
+
+        </div>
+    </div>
+    
+    <div class="success-message" id="successMessage">¡CÓDIGO CORRECTO!</div>
+
+    <script>
+        window.onload = function() {
+            /* === GENERAR ESTRELLAS FIJAS ALEATORIAS === */
+            const numStars = 120;
+            for (let i = 0; i < numStars; i++) {
+                const star = document.createElement("div");
+                star.classList.add("star");
+                let size = Math.random() * 3 + 1; // tamaño entre 1 y 4 px
+                star.style.width = size + "px";
+                star.style.height = size + "px";
+                star.style.top = Math.random() * window.innerHeight + "px";
+                star.style.left = Math.random() * window.innerWidth + "px";
+                star.style.opacity = Math.random() * 0.8 + 0.2; // brillo distinto
+                star.style.animationDuration = (Math.random() * 2 + 1) + "s"; // parpadeo distinto
+                document.body.appendChild(star);
+            }
+
+            /* === GENERAR ESTRELLAS FUGACES ALEATORIAS === */
+            function createShootingStar() {
+                const star = document.createElement("div");
+                star.classList.add("shooting-star");
+                star.style.top = Math.random() * (window.innerHeight / 2) + "px"; // mitad superior
+                star.style.left = Math.random() * (window.innerWidth / 2) + "px"; // mitad izquierda
+                document.body.appendChild(star);
+
+                setTimeout(() => {
+                    star.remove();
+                }, 2000); // dura lo mismo que la animación
+            }
+
+            // Lanza una estrella fugaz cada cierto tiempo aleatorio
+            setInterval(() => {
+                const cantidad = Math.floor(Math.random() * 3) + 1; // entre 1 y 3 fugaces
+                for (let i = 0; i < cantidad; i++) {
+                    if (Math.random() > 0.4) { // probabilidad de que salga cada una
+                        createShootingStar();
+                    }
+                }
+            }, 800); // cada 0.8s se lanzan
+        };
+
+        // === LÓGICA DEL CANDADO ===
+        let comboValues = [0, 0, 0];
+        const correctCombo = [31, 8, 24]; // La combinación correcta
+
+        function changeNumber(wheelIndex, change) {
+            const index = wheelIndex - 1;
+            let currentValue = comboValues[index];
+
+            currentValue += change;
+
+            if (currentValue < 0) {
+                currentValue = 31;
+            } else if (currentValue > 31) {
+                currentValue = 0;
+            }
+
+            comboValues[index] = currentValue;
+
+            const formattedValue = String(currentValue).padStart(2, '0');
+            document.querySelector(`#wheel${wheelIndex} .number-display`).textContent = formattedValue;
+
+            checkCombination();
+        }
+
+        function checkCombination() {
+    const isCorrect = comboValues[0] === correctCombo[0] &&
+                     comboValues[1] === correctCombo[1] &&
+                     comboValues[2] === correctCombo[2];
+
+    if (isCorrect) {
+        // Mostrar mensaje de éxito (opcional, si quieres que aparezca antes de irse)
+        const successMessage = document.getElementById('successMessage');
+        successMessage.style.display = 'block';
+        
+        console.log("¡CÓDIGO CORRECTO!");
+        
+        // Redirigir después de 1.5 segundos
+        setTimeout(() => {
+            window.location.href = "index.html"; // <-- cambia por el nombre de tu archivo destino
+        }, 1500);
+    } else {
+        const successMessage = document.getElementById('successMessage');
+        successMessage.style.display = 'none';
+        console.log("Código incorrecto.");
+    }
+}
+        
+    </script>
+</body>
+</html>
